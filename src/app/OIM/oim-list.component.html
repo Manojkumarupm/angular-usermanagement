@@ -1,0 +1,70 @@
+<div class="card">
+  
+<button (click)="toggle()" id="btToggle" class="btn btn-info btn-lg" >{{button_name}}</button>
+
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+ <div *ngIf="rowData">
+    <ag-grid-angular style="width: 100%; height: 500px"
+                     class="ag-theme-balham" 
+                     paginationAutoPageSize=true
+                     paginationPageSize=5
+                     [rowData]='rowData'
+                     [columnDefs]="columnDefs"
+                     rowSelection="multiple"
+                     [defaultColDef]="defaultColDef"
+                     (gridReady)="onGridReady($event)"
+                     [frameworkComponents]="frameworkComponents">
+    </ag-grid-angular>
+  </div>
+<!--
+  <div class="table-responsive">
+    <table class="table mb-0"
+           *ngIf="Workviewusers && Workviewusers.length">
+      <thead>
+        <tr>
+          <th>
+
+          </th>
+          <th>loginId</th>
+          <th>supervisorId</th>
+          <th>modelId</th>
+          <th>DomainName</th>
+          <th>status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of Workviewusers">
+          <td>
+
+          </td>
+          <td>
+            <a [routerLink]="[product.loginId]"
+               [queryParams]="{filterBy: listFilter}">
+              {{ product.loginId }}
+            </a>
+          </td>
+          <td>{{ product.supervisorId }}</td>
+          <td>{{ product.modelId }}</td>
+          <td>{{ product.DomainName }}</td>
+          <td> {{ product.status }}</td>
+          <td>
+            <button class="btn btn-outline-primary btn-sm"
+                    [routerLink]="[product.id, 'edit']">
+              Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+-->
+
+</div>
+
+<div *ngIf="errorMessage"
+     class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>

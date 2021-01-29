@@ -1,0 +1,270 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form novalidate
+          (ngSubmit)="saveUser()"
+          [formGroup]="oimForm">
+
+      <!-- Lan Id for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="loginId">Login Id</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="loginId"
+                 type="text"
+                 placeholder="Lan Id for user who need access (required)"
+                 formControlName="loginId"
+                 (change)="ValidateLanCode($event)"
+                 [ngClass]="{'is-invalid': (oimForm.get('loginId').touched ||
+                                            oimForm.get('loginId').dirty) &&
+                                            !oimForm.get('loginId').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('loginId').errors?.required">
+              Please enter user Login Id.
+            </span>
+            <span *ngIf="oimForm.get('loginId').errors?.minlength">
+              The Login Id name must be longer than 4 characters.
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- Lan Id for user who need access end-->
+      <!-- model Id for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="modelId">Model Lan Id</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="modelId"
+                 type="text"
+                 placeholder="Model Lan Id for user who need access for work view profile copy (required)"
+                 formControlName="modelId"
+                 (change)="ValidateModelId($event)"
+                 [ngClass]="{'is-invalid': (oimForm.get('modelId').touched ||
+                                            oimForm.get('modelId').dirty) &&
+                                            !oimForm.get('modelId').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('modelId').errors?.required">
+              Please enter user's Model Lan Id.
+            </span>
+            <span *ngIf="oimForm.get('modelId').errors?.minlength">
+              The Model Lan Id name must be longer than 4 characters.
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- model Id for user who need access end-->
+      <!-- supervisor Id for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="supervisorId">Supervisor Lan Id</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="supervisorId"
+                 type="text"
+                 placeholder="supervisor Lan Id for user who need access to work view (required)"
+                 formControlName="supervisorId"
+                 (change)="ValidateSupervisorId($event)"
+                 [ngClass]="{'is-invalid': (oimForm.get('supervisorId').touched ||
+                                oimForm.get('supervisorId').dirty) &&
+                                !oimForm.get('supervisorId').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('supervisorId').errors?.required">
+              Please enter user's supervisor Lan Id.
+            </span>
+            <span *ngIf="oimForm.get('supervisorId').errors?.minlength">
+              The supervisor Lan Id name must be longer than 4 characters.
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- supervisor Id for user who need access end-->
+      <!-- domain for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="DomainName">Domain</label>
+        <div class="col-md-8">
+          <select single
+                  class="custom-select"
+                  formControlName="DomainName"
+                  class="form-control"
+                  id="DomainName"
+                  (change)="changeDomain($event)"
+                  [ngClass]="{'is-invalid': (oimForm.get('DomainName').touched ||
+                                      oimForm.get('DomainName').dirty) &&
+                                      !oimForm.get('DomainName').valid }">
+            <option value="Choose your domain">Choose your domain</option>
+            <option *ngFor="let domain of allowedDomain"
+                    [ngValue]="domain">{{domain}}</option>
+          </select>
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('DomainName').errors?.required">
+              Please enter user's domain
+            </span>
+
+          </span>
+        </div>
+      </div>
+
+      <!-- domain for user who need access end-->
+      <!-- OperatingSystem for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="operatingSystem">operating System</label>
+        <div class="col-md-8">
+          <select single
+                  class="custom-select"
+                  formControlName="operatingSystem"
+                  class="form-control"
+                  id="operatingSystem"
+                  (change)="changeoperatingSystem($event)"
+                  [ngClass]="{'is-invalid': (oimForm.get('operatingSystem').touched ||
+                                      oimForm.get('operatingSystem').dirty) &&
+                                      !oimForm.get('operatingSystem').valid }">
+            <option value="Choose your operating System">Choose your operating System</option>
+            <option *ngFor="let OS of allowedOperatingSystem"
+                    [ngValue]="OS">{{OS}}</option>
+          </select>
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('operatingSystem').errors?.required">
+              Please enter user's domain
+            </span>
+
+          </span>
+        </div>
+      </div>
+
+      <!-- operating system for user who need access end-->
+
+      <!-- Citrix Access for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="citrixAccess">citrix Access</label>
+        <div class="col-md-8">
+          <select single
+                  class="custom-select"
+                  formControlName="citrixAccess"
+                  class="form-control"
+                  id="citrixAccess"
+                  (change)="changecitrixAccess($event)"
+                  [ngClass]="{'is-invalid': (oimForm.get('citrixAccess').touched ||
+                                      oimForm.get('citrixAccess').dirty) &&
+                                      !oimForm.get('citrixAccess').valid }">
+            <option value="Choose Yes if Citrix; No for Desktop/laptop">Choose Yes if Citrix; No for Desktop/laptop</option>
+            <option *ngFor="let OS of YesorNo"
+                    [ngValue]="OS">{{OS}}</option>
+          </select>
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('citrixAccess').errors?.required">
+              Please enter user's citrix access
+            </span>
+
+          </span>
+        </div>
+      </div>
+
+      <!-- Citrix Access for user who need access end-->
+      <!-- Department for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="Department">Department</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="Department"
+                 type="text"
+                 placeholder="Department user belongs to eg:- Claims;Underwriting;reinsurance (required)"
+                 formControlName="Department"
+                 
+                 [ngClass]="{'is-invalid': (oimForm.get('Department').touched ||
+                                            oimForm.get('Department').dirty) &&
+                                            !oimForm.get('Department').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('Department').errors?.required">
+              Please enter user Department 
+            </span>
+            <span *ngIf="oimForm.get('Department').errors?.minlength">
+              Please enter user Department
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- Department for user who need access end-->
+      <!-- Business for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="BusinessGroup">Business Group</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="BusinessGroup"
+                 type="text"
+                 placeholder="BusinessGroup user belongs to eg:- Genpact;Claims Ops (required)"
+                 formControlName="BusinessGroup"
+                 
+                 [ngClass]="{'is-invalid': (oimForm.get('BusinessGroup').touched ||
+                                            oimForm.get('BusinessGroup').dirty) &&
+                                            !oimForm.get('BusinessGroup').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('BusinessGroup').errors?.required">
+              Please enter user BusinessGroup 
+            </span>
+            <span *ngIf="oimForm.get('BusinessGroup').errors?.minlength">
+              Please enter user BusinessGroup
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- Business Group for user who need access end-->
+      <!-- Justification for user who need access start-->
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="Justification">Justification</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="Justification"
+                 type="textArea"
+                 placeholder="Justification for user who need access (required)"
+                 formControlName="Justification"
+                 
+                 [ngClass]="{'is-invalid': (oimForm.get('Justification').touched ||
+                                            oimForm.get('Justification').dirty) &&
+                                            !oimForm.get('Justification').valid }" />
+          <span class="invalid-feedback">
+            <span *ngIf="oimForm.get('Justification').errors?.required">
+              Please enter user Justification 
+            </span>
+            <span *ngIf="oimForm.get('Justification').errors?.minlength">
+              Please enter user Justification
+            </span>
+          </span>
+        </div>
+      </div>
+      <!-- Justification for user who need access end-->
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-6">
+          <button class="btn btn-primary mr-3"
+                  style="width:80px;"
+                  type="submit"
+                  [title]="oimForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!oimForm.valid">
+           <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+          </button>
+          <button class="btn btn-outline-secondary mr-2"
+                  style="width:100px;"
+                  type="button"
+                  title="Cancel your edits"
+                  [routerLink]="['/oim']"><i class="fa fa-window-close" aria-hidden="true"></i> Cancel
+          </button>
+         
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>
